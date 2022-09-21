@@ -32,6 +32,6 @@ https://www.rstudio.com/products/rstudio/download/#download
 
 5. Creates a new R-Studio project that point to "Cartera" folder. 
 
-6. Once the project is created and opened, click on "install R packages".
+6. Once the project is created and opened, click on "install R packages". This could take several minutes.
 
 7. Now you will be able to run the project.
