@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 #matematica
 import math as mt
 
+from decimal import Decimal
 
 
 ################################################################################
@@ -31,29 +32,42 @@ print(v_t)
 
 #Definir número de interacciones
 
-num_ports=50000
+NUM_PORTS=50000
 
+
+# Limites de los pesos
+WEIGHT_MIN = 1
+WEIGHT_MAX = 30
+WEIGHT_SIZE = 7
 
 #Ejecutar interacciones
 
-all_weights=np.zeros((num_ports,7))
+all_weights=np.zeros((NUM_PORTS,WEIGHT_SIZE))
+
 
 
 #Generar pesos
 
+def percent(value, decimals=2):
+     return round(Decimal(value.item()) / Decimal(100), decimals)
+
+def generate_weights(size, low=1, high=100):
+     """
+     Generar array de 'size' numeros en un intervalo [low, high).
+
+     # numpy.random.randint:
+          Return random integers from low (inclusive) to high (exclusive).
+          Return random integers from the “discrete uniform” distribution of the specified dtype in the “half-open” interval [low, high).
+          If high is None (the default), then results are from [0, low).
+     """
+     return map(percent, np.random.randint(low=low, high=high, size=size))
 
 
-for ind in range(num_ports):
 
-     weights=np.array(np.random.random(7))
-     weights=weights/np.sum(weights)         
-   
+for ind in range(NUM_PORTS):
+     weights=np.array(generate_weights(size=WEIGHT_SIZE, low=WEIGHT_MIN, high=WEIGHT_MAX))
+     weights=weights/np.sum(weights)
      all_weights[ind:]=weights
-
-
-
-
-
 
 
 #Crear data frame
