@@ -52,3 +52,9 @@ https://www.rstudio.com/products/rstudio/download/#download
 6. Push your changes
 
 7. Open a new PR from your forked repo against the original repo
+
+## Test changes
+
+1. git pull origin main
+1. git fetch --all
+2. git checkout branch-name
