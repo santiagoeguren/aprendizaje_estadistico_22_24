@@ -15,6 +15,8 @@ import yfinance as yf
 #pyfolio
 #import pyfolio as pf
 
+# Cast flotantes a Decimal para operaciones con decimales
+from decimal import Decimal
 
 ################################################################################
 #Transformar objetos de R a Python
@@ -35,6 +37,12 @@ ticker=r["ticker"]
 #Definir número de interacciones
 
 num_ports=100000
+
+
+# Definir limites de los pesos
+weight_min = 1
+weight_max = 30
+weight_size = 7
 
 
 #Ejecutar interacciones
