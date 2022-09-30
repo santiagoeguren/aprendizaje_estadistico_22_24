@@ -64,7 +64,7 @@ def generate_weights(size, low=1, high=100):
           Return random integers from the “discrete uniform” distribution of the specified dtype in the “half-open” interval [low, high).
           If high is None (the default), then results are from [0, low).
      """
-     return map(percent, np.random.randint(low=low, high=high, size=size))
+     return list(map(percent, np.random.randint(low=low, high=high, size=size)))
 
 for ind in range(num_ports):
      weights=np.array(generate_weights(size=weight_size, low=weight_min, high=weight_max))
