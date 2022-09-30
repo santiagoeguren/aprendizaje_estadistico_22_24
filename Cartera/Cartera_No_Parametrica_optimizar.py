@@ -40,8 +40,8 @@ num_ports=100000
 
 
 # Definir limites de los pesos
-weight_min = 1
-weight_max = 30
+weight_min = 0.04
+weight_max = 1
 weight_size = len(ticker)
 
 
@@ -52,27 +52,24 @@ all_weights=np.zeros((num_ports,weight_size))
 
 #Generar pesos
 
-def percent(value, decimals=2):
-     return round(Decimal(value.item()) / Decimal(100), decimals)
+def between(value):
+     if value.item() >= weight_min and value.item() <= weight_max:
+          return value
+     return 0
 
-
-def generate_weights(size, low=1, high=100):
+def generate_weights(size):
      """
      Generar array de 'size' numeros en un intervalo [low, high).
-     # numpy.random.randint:
-          Return random integers from low (inclusive) to high (exclusive).
-          Return random integers from the “discrete uniform” distribution of the specified dtype in the “half-open” interval [low, high).
-          If high is None (the default), then results are from [0, low).
      """
-     return list(map(percent, np.random.randint(low=low, high=high, size=size)))
+     weights=np.array(np.random.random(size))
+     weights= weights / np.sum(weights)
+     return list(map(between, weights))
 
 for ind in range(num_ports):
-     weights=np.array(generate_weights(size=weight_size, low=weight_min, high=weight_max))
-     weights=weights/np.sum(weights)         
-     all_weights[ind:]=weights
+     all_weights[ind:]= generate_weights(weight_size)
 
 
-
+# Redondear valores
 all_weights=all_weights.round(2)
 
 
