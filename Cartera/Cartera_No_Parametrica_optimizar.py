@@ -15,9 +15,6 @@ import yfinance as yf
 #pyfolio
 #import pyfolio as pf
 
-# Cast flotantes a Decimal para operaciones con decimales
-from decimal import Decimal
-
 ################################################################################
 #Transformar objetos de R a Python
 ################################################################################
