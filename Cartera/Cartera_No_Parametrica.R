@@ -148,18 +148,10 @@ v_t=data.frame(v_t)
 colnames(v_t)=ticker
 
 
+#-------------------------------------------------------------------------------
+#Crear CSV para importar en Python
+#-------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+write.table(v_t, "v_t.csv", , row.names = FALSE, col.names = FALSE)
+write.table(x_barra, "x_barra.csv", row.names = FALSE, col.names = FALSE)
+write.table(ticker, "ticker.csv", row.names = FALSE, col.names = FALSE)

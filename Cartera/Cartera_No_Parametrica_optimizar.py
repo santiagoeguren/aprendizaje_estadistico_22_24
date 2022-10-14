@@ -17,12 +17,12 @@ import yfinance as yf
 
 
 ################################################################################
-#Transformar objetos de R a Python
+#Transformar objetos de R a Python, leyendo desde un CSV
 ################################################################################
 
-v_t=r["v_t"]
-x_barra=r["x_barra"]
-ticker=r["ticker"]
+v_t = pd.read_csv(r'v_t.csv')
+x_barra = pd.read_csv(r'x_barra.csv')
+ticker = pd.read_csv(r'ticker.csv')
 
 
 ################################################################################

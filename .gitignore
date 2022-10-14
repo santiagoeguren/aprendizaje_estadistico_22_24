@@ -2,3 +2,5 @@ venv
 .Rproj.user
 *.Rproj
 *.Rhistory
+.vscode
+*.csv
