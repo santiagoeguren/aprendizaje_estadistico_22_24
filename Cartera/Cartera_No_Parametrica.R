@@ -60,7 +60,7 @@ stocks=SP500$Symbol
 #Definir variables
 #-------------------------------------------------------------------------------
 
-ticker=sample(stocks,30,replace = FALSE)
+ticker=sample(stocks,10,replace = FALSE)
        
 
 
