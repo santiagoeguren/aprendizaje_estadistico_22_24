@@ -22,7 +22,37 @@ require(fGarch)
 library(forecast)
 #Complemento grafici
 library(plotly)
+#Complmento ggplot2
+library(viridis)
+#Complmento ggplot2
+library(extrafont)
+#Sumar columnas
+library(dplyr)
 
+
+
+################################################################################
+#Cargar  Funciones
+################################################################################
+
+
+#-------------------------------------------------------------------------------
+#Estimar ETL No Parametrico
+
+f_ETL_no_parametric=function(e,r){
+  
+  n=length(r) 
+  r=sort(r)
+  
+  
+  
+  etl_resultado=1/e*((1/n)*sum(r[c(1:(round(n*e,0)))])+
+                       (e-((round(n*e,0))/(n)))*r[round(n*e+1,0)])
+  
+  
+  return(etl_resultado)
+  
+}
 
 
 
@@ -60,7 +90,7 @@ stocks=SP500$Symbol
 #Definir variables
 #-------------------------------------------------------------------------------
 
-ticker=sample(stocks,10,replace = FALSE)
+ticker=sample(stocks,6,replace = FALSE)
        
 
 
@@ -148,6 +178,94 @@ v_t=data.frame(v_t)
 colnames(v_t)=ticker
 
 
+################################################################################
+#Armar la cartera
+################################################################################
+
+
+
+
+all_weights=NULL
+
+
+i=1
+
+while (i<=50000) {
+  
+
+
+weights=sample(1:100, length(ticker), replace=T)
+weights=round(weights/sum(weights),3)
+
+all_weights=rbind(all_weights,weights)
+
+i=i+1
+
+}
+
+
+
+
+
+
+
+ER=NULL
+ETL=NULL
+STARR=NULL
+
+
+i=1
+
+while (i<=length(all_weights[,1])) {
+  
+
+
+ER=c(ER,sum(all_weights[i,]*x_barra))
+
+ETL=c(ETL,-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t)))
+
+STARR=c(STARR,sum(all_weights[i,]*x_barra)/(-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t))))
+
+
+i=i+1
+}
+
+#Controlar la multi all_weights[i,]*v_t
+
+rowSums(all_weights[1,]*v_t)
+
+
+dat=data.frame(ER,ETL,STARR,all_weights=all_weights)
+
+
+#Grear grafico
+
+
+#font_import(pattern = "OfficinaSansITCMedium.ttf", prompt = FALSE)
+#extrafont::loadfonts(device = "win")
+
+g=ggplot(dat, aes(x = ETL, y = ER))
+g=g+geom_point(mapping = aes(color = STARR))
+g=g+ scale_color_viridis(direction = -1, option = "D", "STARR")
+g=g+labs(x = "ETL", y = "Retorno",
+         title = "Frontera de inversión",
+         subtitle = "ETL vs Retorno",
+         caption = "Fuente: Propia")
+g=g+theme_minimal()
+g=g+theme(plot.background = element_rect(fill = "white", color = NA),
+          text = element_text(family = "OfficinaSansITC"))
+g=g+theme(text = element_text(family = "OfficinaSansITC")) + 
+  theme(axis.text.x = element_text(size = 12, color = "gray30")) + 
+  theme(axis.text.y = element_text(size = 12, color = "gray30")) + 
+  theme(plot.title = element_text(color = "gray10", size = 18)) +   
+  theme(plot.subtitle = element_text(color = "gray40", size = 16)) + 
+  theme(plot.caption = element_text(color = "gray40", size = 12)) + 
+  theme(axis.title.x = element_text(hjust = 0, size = 14, color = "grey20")) + 
+  theme(axis.title.y = element_text(vjust = 1, size = 14, color = "grey20")) + 
+  theme(legend.text = element_text(size = 12, color = "grey40")) + 
+  theme(legend.title = element_text(size = 15, color = "grey30"))
+
+g
 
 
 
@@ -160,6 +278,5 @@ colnames(v_t)=ticker
 
 
 
-
-
+#https://rpubs.com/chidungkt/410054
 
