@@ -85,12 +85,38 @@ stocks=SP500$Symbol
 ################################################################################
 
 
+#-------------------------------------------------------------------------------
+#inicio ciclo ii
+
+ER_model=NULL
+ETL_model=NULL
+STARI_model=NULL
+
+ER_n=NULL
+ETL_n=NULL
+STARI_n=NULL
+
+
+
+
+ii=1
+
+
+
+
+
+while (ii<=50) {
+  
+
+
 
 #-------------------------------------------------------------------------------
 #Definir variables
 
+n_stocks=6
 
-ticker=sample(stocks,3,replace = FALSE)
+
+ticker=sample(stocks,n_stocks,replace = FALSE)
        
 
 
@@ -99,7 +125,7 @@ v_t=NULL
 
 
 ################################################################################
-#Training
+#Descargar Datos
 ################################################################################
 
 
@@ -175,16 +201,19 @@ e=e+1
 }
 
 
-#-------------------------------------------------------------------------------
+################################################################################
 #Crear data frame
+################################################################################
 
 
 v_t=data.frame(v_t)
 colnames(v_t)=ticker
 
 
+
+
 ################################################################################
-#Armar la cartera
+#Train
 ################################################################################
 
 
@@ -209,6 +238,13 @@ i=i+1
 
 }
 
+#-------------------------------------------------------------------------------
+#Colocar restriccion
+
+all_weights[all_weights<=0.01]=NA
+all_weights=na.omit(all_weights)
+
+
 
 
 #-------------------------------------------------------------------------------
@@ -217,7 +253,7 @@ i=i+1
 
 ER=NULL
 ETL=NULL
-STARR=NULL
+STARI=NULL
 
 
 #-------------------------------------------------------------------------------
@@ -233,7 +269,7 @@ ER=c(ER,sum(all_weights[i,]*x_barra))
 
 ETL=c(ETL,-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t)))
 
-STARR=c(STARR,sum(all_weights[i,]*x_barra)/(-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t))))
+STARI=c(STARI,sum(all_weights[i,]*x_barra)/(-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t))))
 
 
 i=i+1
@@ -247,14 +283,14 @@ i=i+1
 #-------------------------------------------------------------------------------
 #Construir Data frame
 
-dat=data.frame(ER,ETL,STARR,all_weights=all_weights)
+dat=data.frame(ER,ETL,STARI,all_weights=all_weights)
 
 
-dat=dat[order(-dat$STARR),]
+dat=dat[order(-dat$STARI),]
 
 #Portfolio con mayor STARR
-port_STARR=dat[1,]
-
+port_STARI=dat[1,]
+port_STARI
 
 #-------------------------------------------------------------------------------
 #Grear grafico
@@ -263,9 +299,9 @@ port_STARR=dat[1,]
 
 
 g=ggplot(dat, aes(x = ETL, y = ER))
-g=g+geom_point(mapping = aes(color = STARR),alpha = 0.5)
-g=g+geom_point(data=port_STARR,aes(x =ETL , y = ER),size=3,col="red")
-g=g+ scale_color_viridis(direction = -1, option = "D", "STARR")
+g=g+geom_point(mapping = aes(color = STARI),alpha = 0.5)
+g=g+geom_point(data=port_STARI,aes(x =ETL , y = ER),size=3,col="red")
+g=g+ scale_color_viridis(direction = -1, option = "D", "STARI")
 g=g+labs(x = "ETL", y = "Retorno",
          title = "Frontera de inversión",
          subtitle = "ETL vs Retorno",
@@ -283,7 +319,8 @@ g=g+theme(text = element_text(family = "OfficinaSansITC")) +
   theme(axis.title.y = element_text(vjust = 1, size = 14, color = "grey20")) + 
   theme(legend.text = element_text(size = 12, color = "grey40")) + 
   theme(legend.title = element_text(size = 15, color = "grey30"))
-g
+#g
+
 
 
 
@@ -295,14 +332,23 @@ g
 ################################################################################
 
 
+#-------------------------------------------------------------------------------
+#Definir variables
+
+
+x_barra=NULL
+v_t=NULL
+
+
+
 
 #-------------------------------------------------------------------------------
 #Cargar Fechas
 
 #Primero año--->mes--->dia
 
-f_init='2019-01-01'
-f_final='2021-01-01'
+f_init='2019-01-02'
+f_final='2020-01-01'
 
 
 
@@ -367,23 +413,104 @@ while (e<=length(ticker)) {
 }
 
 
-#-------------------------------------------------------------------------------
+################################################################################
 #Crear data frame
+################################################################################
 
 
 v_t=data.frame(v_t)
 colnames(v_t)=ticker
 
 
+
+
 ################################################################################
-#Armar la cartera
+#Train
 ################################################################################
 
 
+#-------------------------------------------------------------------------------
+#Crear pesos
+
+all_weights=NULL
 
 
 
 
+all_weights=as.numeric(port_STARI[1,seq(4,3+n_stocks,1)])
+all_weights=rbind(all_weights,rep(1,n_stocks)/n_stocks)
+all_weights
+
+
+
+
+
+
+#-------------------------------------------------------------------------------
+#Definir variables
+
+
+ER=NULL
+ETL=NULL
+STARI=NULL
+
+
+#-------------------------------------------------------------------------------
+#Estimar variables
+
+i=1
+
+while (i<=length(all_weights[,1])) {
+  
+  
+  
+  ER=c(ER,sum(all_weights[i,]*x_barra))
+  
+  ETL=c(ETL,-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t)))
+  
+  STARI=c(STARI,sum(all_weights[i,]*x_barra)/(-1*f_ETL_no_parametric(0.05,rowSums(all_weights[i,]*v_t))))
+  
+  
+  i=i+1
+}
+
+#Controlar la multi all_weights[i,]*v_t
+
+#rowSums(all_weights[1,]*v_t)
+
+
+#-------------------------------------------------------------------------------
+#Construir Data frame
+
+dat=data.frame(ER,ETL,STARI,all_weights=all_weights)
+
+
+ER_model[ii]=dat$ER[1]
+ETL_model[ii]=dat$ETL[1]
+STARI_model[ii]=dat$STARI[1]
+  
+
+ER_n[ii]=dat$ER[2]
+ETL_n[ii]=dat$ETL[2]
+STARI_n[ii]=dat$STARI[2]
+
+
+ii=ii+1
+
+}
+
+
+
+summary(ER_model)
+summary(ER_n)
+
+summary(ETL_model)
+summary(ETL_n)
+
+
+
+summary(STARI_model)
+summary(STARI_n)
 
 
 

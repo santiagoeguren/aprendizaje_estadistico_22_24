@@ -1,0 +1,309 @@
+%---------------------------------------------------------------------------------
+%	PACKAGES
+%----------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[spanish]{babel}
+\parindent=1cm %modificar tamaño de sangria 
+\usepackage{amsmath}
+\usepackage{amssymb,amsfonts,latexsym,cancel}
+%-------------------------------------------------------------------------------------
+%Librerias gráficas
+
+
+\usepackage{graphicx}
+\usepackage{epstopdf} %es para convertir imagenes eps a pdf es para que pueda compilar
+\usepackage{float}
+\usepackage{subfigure}
+
+
+%--------------------------------------------------------------------------------------
+%Librerias para vincular las citas
+
+\usepackage{hyperref} 
+\usepackage{xcolor}
+\usepackage[export]{adjustbox}
+
+\usepackage{footnote}
+
+%Define el color de las biografia
+\hypersetup{linkbordercolor=blue}
+
+
+
+%####################################################################################
+%Inicio Documento
+%####################################################################################
+\begin{document}
+
+
+
+
+
+%####################################################################################
+%	Carátula
+%####################################################################################
+
+
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{-1in}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=6cm]{index}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+
+
+Universidad Champagnat\\
+\vspace*{0.15in}
+
+%Facultad de Ciencias Económicas \\
+%\vspace*{0.6in}
+
+
+
+\begin{Large}
+\textbf{Statiscal learning and portfolio optimizacion } \\
+\end{Large}
+\vspace*{0.3in}
+
+
+%Técnicas de aprendizaje estadístico con asimetrías para la optimización de carteras de inversión
+
+\rule{80mm}{0.1mm}\\
+\vspace*{0.1in}
+
+
+\begin{large}
+Santiago Emiliano Eguren
+\end{large}
+\vspace*{0.3in}
+
+
+
+
+\begin{large}
+Rodri\\
+\end{large}
+\vspace*{0.3in}
+
+
+
+\begin{large}
+Cristian\\
+\end{large}
+\vspace*{0.3in}
+
+
+\begin{large}
+July 2022
+\end{large}
+\vspace*{0.3in}
+
+
+
+\end{center}
+
+\end{titlepage}
+
+
+
+%Nueva Pagina
+\newpage
+
+
+
+
+
+
+
+%#####################################################################################
+%	Seccion 
+%#####################################################################################
+
+\section{Introduction}
+
+
+
+
+
+
+
+
+%#####################################################################################
+%	Seccion 
+%#####################################################################################
+
+\section{Basic Concepts}
+
+
+
+
+%-------------------------------------------------------------------------------------
+%Subsection
+%-------------------------------------------------------------------------------------
+
+\subsection{Mixed Tempered Stable Paretian}
+
+
+The Mixed Tempered Stable Paretian was introduced by Rroji and Mercuri \cite{Rroji_Mercuri} in $2014$. Is is a generalization of the Normal Variance Mean Mixtures.  A ramdon variable variable $V$ is Mixed Tempered Stable
+distributed if:
+
+
+\begin{equation}
+V=\mu_{0} + \mu U +\sqrt{U} E
+\label{eq_MTStable}
+\end{equation}\\
+
+
+where:\\
+
+\begin{itemize}
+\item $\mu_{0}$, $\mu$ $\varepsilon$ $\Re$
+\item $V$ is a random variable defined in positive real number.???
+\item $E$ is a classical Tempered Stable random variable.???
+\end{itemize}
+
+
+%-------------------------------------------------------------------------------------
+%Subsection
+%-------------------------------------------------------------------------------------
+
+\subsection{Risk Measure - ETL}
+
+Expected Tail Loss is defined as the average loss beyond VaR:
+
+\begin{equation}
+ETL_{\varepsilon}[V]=E[-V | -V > VaR_{\varepsilon}[V]]
+\label{eq_ETL_1}
+\end{equation}\\
+
+
+ETL is also know as Expected Shortfall (ES) or Conditional Value-at-Risk (CVAR). Usually $\varepsilon$ is equal to $0,01$ or $0,05$. ETL is a convex function weights and hence is usefull to optimizate portfolios (see Rockafellar and Uryasev \cite{RockafellarUryasev}).
+
+
+
+\subsection{Ratio - STARI}
+
+The Sharpe Ratio is the clasical portfolio performance measure, but it has a disadvantages. Martin, Svetlozar and Siboulet \cite{Martin_Rachev_Siboulet}  described this disadvantages as follow:
+
+
+
+
+\begin{itemize}
+\item The standard deviation is a symmetric measure that not focus on downside risk.
+\item The standard deviation is not a coherent measure of risk (see Artzner \cite{Artzner_Delbean}).`
+\item The estimate of standard deviation is a highly unstable when the portfolio has a heavy-tailed distribution.
+\end{itemize}
+
+
+This authors propose the \textit{Stable Tail Adjusted Return Indicator (STARI)} as an alternative performance measure that does not suffer these problems.  The STARI is defined as:
+ 
+\begin{equation}
+STARI_{\varepsilon}=\dfrac{E[ \Delta X]-r_{f}}{ETL_{\varepsilon}[V]}
+\label{eq_STARI_e}
+\end{equation}\\
+
+
+Where:
+
+\begin{itemize}
+\item $E[\Delta X]$ is the expected return of portfolio.
+\item $ETL_{\varepsilon}[V]$  is the Expected Tail Loss.
+\item $r_{f}$ is the risk-free return
+\end{itemize}
+
+
+
+
+%#####################################################################################
+%	Seccion 
+%#####################################################################################
+
+\section{Portfolio Optimizacion}
+
+
+
+
+
+%-------------------------------------------------------------------------------------
+\subsection{Portfolio without restriction???}
+
+
+
+%-------------------------------------------------------------------------------------
+\subsection{Portfolio with restriction???}
+
+
+
+
+%#####################################################################################
+%	Seccion 
+%#####################################################################################
+
+\section{Conclusion}
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	Bibliografía
+%----------------------------------------------------------------------------------------
+%Nueva Pagina
+%\newpage
+\clearpage
+
+\begin{thebibliography}{10} %el 10 es el tamaño del [1]
+
+	
+\bibitem{Artzner_Delbean} Artzner, P., Delbean, F., Eber, J. M. and Heath, D.,  \emph{Coherent measures of risk}, Mathematical Finance 9, 203-228, 1999.
+
+\bibitem{Hitai_Friedrick_Mercuri_Rroji} Hitaj, Asmerilda, Hubalek, Friedrick, Mercurim  Lorenzo
+and Rroji, Edit\emph{On Properties of the MixedTS Distribution and its Multivariate Extension}, Article in International Statiscal Review, May 2018	
+	
+\bibitem{Martin_Rachev_Siboulet} Martin R. Douglas, Svetlozar Rachev and Siboulet Frederic, \emph{Phi-alpha Optimal Portfolios and Extreme Risk }, Wilmott magazine, November 2003.
+
+
+\bibitem{Rroji_Mercuri} Rroji, Edit and Mercuri, Lorenzo \emph{Mixed Tempered Stable Distribution}, Article in Quantitative Finance, October 2014.
+
+
+\bibitem{RockafellarUryasev} Rockafellar, R.T. and Uryasev, S., \emph{Optimization of conditional value-at-risk},
+Journal of Risk 3, 21-41,2000.
+
+
+
+
+
+
+
+
+\end{thebibliography}
+
+%#####################################################################################
+%Tabla de contenidos
+%#####################################################################################
+%Nueva Pagina
+\newpage
+ 
+
+
+\tableofcontents
+
+
+
+%####################################################################################
+%Fin documento
+%####################################################################################
+\end{document}
