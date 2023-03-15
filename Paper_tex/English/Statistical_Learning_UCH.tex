@@ -75,7 +75,7 @@ Universidad Champagnat\\
 
 
 \begin{Large}
-\textbf{Statiscal learning and portfolio optimizacion } \\
+\textbf{Statiscal learning and portfolio optimizacion under skewness probability distribution } \\
 \end{Large}
 \vspace*{0.3in}
 
@@ -135,7 +135,8 @@ July 2022
 
 \section{Introduction}
 
-
+The aim of this paper is comprobate if is posible to optimize  effectively  portfolios under 
+the assuption skewness probability distribution function.
 
 
 
@@ -155,75 +156,118 @@ July 2022
 %Subsection
 %-------------------------------------------------------------------------------------
 
-\subsection{Mixed Tempered Stable Paretian}
+\subsection{Multivariate Normal Variance Mixtures}
 
 
-The Mixed Tempered Stable Paretian was introduced by Rroji and Mercuri \cite{Rroji_Mercuri} in $2014$. Is is a generalization of the Normal Variance Mean Mixtures.  A ramdon variable variable $V$ is Mixed Tempered Stable
-distributed if:
+A random vector $\textbf{Z}=[Z_{1},Z_{2},...,Z_{n}]$ follows a normal variance mixture, if:
 
 
 \begin{equation}
-V=\mu_{0} + \mu U +\sqrt{U} E
-\label{eq_MTStable}
+\textbf{Z}=\mu+\sqrt{W}AU
+\label{eq_fdsfdsf4324}
 \end{equation}\\
 
 
-where:\\
+or
 
-\begin{itemize}
-\item $\mu_{0}$, $\mu$ $\varepsilon$ $\Re$
-\item $V$ is a random variable defined in positive real number.???
-\item $E$ is a classical Tempered Stable random variable.???
-\end{itemize}
+\begin{equation}
+\begin{bmatrix}Z_{1}\\Z_{2}\\.\\.\\.\\Z_{n}\end{bmatrix}=
+\begin{bmatrix}\mu_{1}\\ \mu_{2}\\.\\.\\.\\ \mu_{n}\end{bmatrix}
+   \sqrt{W}
+   \begin{bmatrix}
+     a_{11} & a_{12}&.&.&.&a_{1n}\\
+     a_{21} & a_{22}&.&.&.&a_{2n}\\
+     . & .&.&.&.&.\\
+     . & .&.&.&.&.\\
+     . & .&.&.&.&.\\
+     a_{n1} & a_{n2}&.&.&.&a_{nn}\\
+   \end{bmatrix}
+   U
+\label{eq_fsdfsdf45rfdfse}   
+\end{equation}\\
+
+
+Where:\\
+
+
+$\mathbf{\mu}$ $\in$ $\mathbb{R}^{n}$, is the location vector.\\
+
+$W$ is a non-negative random variable independent of U.\\
+
+$A$ $\in$ $\mathbb{R}^{nxn}$ denotes the scale matrix. Where $\Sigma=AA^{T}$ is the covarince matrix and $\Sigma$ $\in$ $\mathbb{R}^{nxn}$: \\
+
+
+
+\begin{equation}
+   \Sigma=
+   \begin{bmatrix}
+     Var[Z_{1}] & Cov[Z_{1},Z_{2}]&.&.&.&Cov[Z_{1},Z_{n}]\\
+     Cov[Z_{2},Z_{1}] & Var[Z_{2}]&.&.&.&Cov[Z_{2},Z_{n}]\\
+     . & .&.&.&.&.\\
+     . & .&.&.&.&.\\
+     . & .&.&.&.&.\\
+     Cov[Z_{n},Z_{1}] & Cov[Z_{n},Z_{2}]&.&.&.&Var[Z_{n}]\\
+   \end{bmatrix}   
+\label{eq_fosdfhsdf8439e}   
+\end{equation}\\
+
+
+$\mathbf{U}$  $\in$ $\mathbb{R}^{n}$ denotes a standard normal random vector:
+
+ 
+ 
+ 
+\begin{equation}
+   U \sim N(
+   \begin{bmatrix}0\\0\\.\\.\\.\\0\end{bmatrix},  
+   \begin{bmatrix}
+     1 & 0 &.&.&.&0\\
+     0 & 1&.&.&.&0\\
+     . & .&.&.&.&.\\
+     . & .&.&.&.&.\\
+     . & .&.&.&.&.\\
+     0 & 0&.&.&.&1\\
+   \end{bmatrix})   
+\label{eq_fosdfijsdf8493}   
+\end{equation}\\
+ 
+
+%The Mixed Tempered Stable Paretian was introduced by Rroji and Mercuri \cite{Rroji_Mercuri} in $2014$. Is is a %generalization of the Normal Variance Mean Mixtures.  A ramdon variable variable $V$ is Mixed Tempered Stable
+%distributed if:
+
+
+%\begin{equation}
+%V=\mu_{0} + \mu U +\sqrt{U} E
+%\label{eq_MTStable}
+%\end{equation}\\
+
+
+%where:\\
+
+%\begin{itemize}
+%\item $\mu_{0}$, $\mu$ $\varepsilon$ $\Re$
+%\item $V$ is a random variable defined in positive real number.???
+%\item $E$ is a classical Tempered Stable random variable.???
+%\end{itemize}
 
 
 %-------------------------------------------------------------------------------------
 %Subsection
 %-------------------------------------------------------------------------------------
 
-\subsection{Risk Measure - ETL}
+\subsection{Expected Shortfall}
 
-Expected Tail Loss is defined as the average loss beyond VaR:
+Expected Shortfall is defined as the average loss beyond VaR:
 
 \begin{equation}
-ETL_{\varepsilon}[V]=E[-V | -V > VaR_{\varepsilon}[V]]
-\label{eq_ETL_1}
+ES_{\varepsilon}[Z_{t}]=E[-Z_{t} | -Z_{t} > VaR_{\varepsilon}[Z_{t}]]
+\label{eq_sdfsdfdsf09f0ifmsfi9}
 \end{equation}\\
 
 
-ETL is also know as Expected Shortfall (ES) or Conditional Value-at-Risk (CVAR). Usually $\varepsilon$ is equal to $0,01$ or $0,05$. ETL is a convex function weights and hence is usefull to optimizate portfolios (see Rockafellar and Uryasev \cite{RockafellarUryasev}).
+ES is also know as Expected Tail Loss (ETL) or Conditional Value-at-Risk (CVAR). Usually $\varepsilon$ is equal to $0,01$ or $0,05$. ES is a convex function weights and hence is usefull to optimizate portfolios (see Rockafellar and Uryasev \cite{RockafellarUryasev}).
 
 
-
-\subsection{Ratio - STARI}
-
-The Sharpe Ratio is the clasical portfolio performance measure, but it has a disadvantages. Martin, Svetlozar and Siboulet \cite{Martin_Rachev_Siboulet}  described this disadvantages as follow:
-
-
-
-
-\begin{itemize}
-\item The standard deviation is a symmetric measure that not focus on downside risk.
-\item The standard deviation is not a coherent measure of risk (see Artzner \cite{Artzner_Delbean}).`
-\item The estimate of standard deviation is a highly unstable when the portfolio has a heavy-tailed distribution.
-\end{itemize}
-
-
-This authors propose the \textit{Stable Tail Adjusted Return Indicator (STARI)} as an alternative performance measure that does not suffer these problems.  The STARI is defined as:
- 
-\begin{equation}
-STARI_{\varepsilon}=\dfrac{E[ \Delta X]-r_{f}}{ETL_{\varepsilon}[V]}
-\label{eq_STARI_e}
-\end{equation}\\
-
-
-Where:
-
-\begin{itemize}
-\item $E[\Delta X]$ is the expected return of portfolio.
-\item $ETL_{\varepsilon}[V]$  is the Expected Tail Loss.
-\item $r_{f}$ is the risk-free return
-\end{itemize}
 
 
 
@@ -234,17 +278,14 @@ Where:
 
 \section{Portfolio Optimizacion}
 
+To optimize, we consider daily return data from the S\&P 500 index between $2008-01-01$ and
+$2018-01-01$. We fit marginal ARMA(1, 1)-GARCH(1, 1) and then fit normal variance
+mixture models to the resulting standardized residuals.
+
+We consider the inverse-gamma distribution for $W$. The portfolio will contain 3 random stock.
 
 
 
-
-%-------------------------------------------------------------------------------------
-\subsection{Portfolio without restriction???}
-
-
-
-%-------------------------------------------------------------------------------------
-\subsection{Portfolio with restriction???}
 
 
 
@@ -268,15 +309,10 @@ Where:
 \begin{thebibliography}{10} %el 10 es el tamaño del [1]
 
 	
-\bibitem{Artzner_Delbean} Artzner, P., Delbean, F., Eber, J. M. and Heath, D.,  \emph{Coherent measures of risk}, Mathematical Finance 9, 203-228, 1999.
+%\bibitem{Artzner_Delbean} Artzner, P., Delbean, F., Eber, J. M. and Heath, D.,  \emph{Coherent measures of risk}, %Mathematical Finance 9, 203-228, 1999.
 
-\bibitem{Hitai_Friedrick_Mercuri_Rroji} Hitaj, Asmerilda, Hubalek, Friedrick, Mercurim  Lorenzo
-and Rroji, Edit\emph{On Properties of the MixedTS Distribution and its Multivariate Extension}, Article in International Statiscal Review, May 2018	
-	
-\bibitem{Martin_Rachev_Siboulet} Martin R. Douglas, Svetlozar Rachev and Siboulet Frederic, \emph{Phi-alpha Optimal Portfolios and Extreme Risk }, Wilmott magazine, November 2003.
-
-
-\bibitem{Rroji_Mercuri} Rroji, Edit and Mercuri, Lorenzo \emph{Mixed Tempered Stable Distribution}, Article in Quantitative Finance, October 2014.
+%\bibitem{Hitai_Friedrick_Mercuri_Rroji} Hitaj, Asmerilda, Hubalek, Friedrick, Mercurim  Lorenzo
+%and Rroji, Edit\emph{On Properties of the MixedTS Distribution and its Multivariate Extension}, Article in %International Statiscal Review, May 2018	
 
 
 \bibitem{RockafellarUryasev} Rockafellar, R.T. and Uryasev, S., \emph{Optimization of conditional value-at-risk},
